@@ -1,0 +1,42 @@
+server:
+  port: 8090
+spring:
+  flyway:
+    enabled: false
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: lean
+    password: lean
+    url: jdbc:mysql://xxx.xxx.xxx/xxxx
+    hikari:
+      maximum-pool-size: 3
+      auto-commit: false
+      driver-class-name: com.mysql.cj.jdbc.Driver
+  mvc:
+    static-path-pattern: /**
+    web:
+      resources:
+        add-mappings: true
+  sbp:
+    runtime-mode: development
+    #    runtime-mode: deployment
+    plugins-root: plugins
+    enabled: true
+    classes-directories:
+      - target/classes
+    disabled-plugins:
+      - com.xeriou.plugins.pluginm
+    controller:
+      base-path: sbp
+
+
+  thymeleaf:
+    prefix: file:./templates/
+    cache: false
+
+logging:
+  level:
+    org:
+      laxture: debug
+      pf4j: debug

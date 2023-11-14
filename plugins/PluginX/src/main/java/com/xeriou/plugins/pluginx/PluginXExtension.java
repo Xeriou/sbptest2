@@ -1,30 +1,32 @@
 package com.xeriou.plugins.pluginx;
 
+import com.xeriou.api.LoadPageExtension;
 import org.pf4j.Extension;
-import org.pf4j.ExtensionPoint;
-import org.pf4j.PluginWrapper;
+import org.springframework.util.ResourceUtils;
 
 import java.io.File;
-import java.net.URL;
+import java.net.URI;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
 @Extension
-public class PluginXExtension implements ExtensionPoint {
-    public List<URL> resources() {
-        List<URL> resources = new ArrayList<>();
+public class PluginXExtension implements LoadPageExtension {
+    @Override
+    public List<File> scanPage() {
         try {
-            PluginWrapper wrapper = PluginEntrePoint.INSTANCE.getWrapper();
-            URL images = wrapper.getPluginClassLoader().getResource("public/templates");
-            for (String file : new File(images.getPath()).list()) {
-                URL resource = new File(images.getPath().concat(File.separator + file)).toURI().toURL();
-                System.out.println("Add Resource ? " + resource);
-                resources.add(resource);
-            }
+            URI templates = this.getClass().getResource("/templates").toURI();
+            System.out.println("ScanFileRunner " + templates);
+
+            Path path = ResourceUtils.getFile(templates).toPath();
+            Files.list(path).forEach(System.out::println);
+
         } catch (Exception e) {
+            System.out.println("Scan Page Error");
             e.printStackTrace();
         }
 
-        return resources;
+        return new ArrayList<>();
     }
 }
