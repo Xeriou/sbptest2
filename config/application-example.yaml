@@ -27,9 +27,9 @@ spring:
       - target/classes
     disabled-plugins:
       - com.xeriou.plugins.pluginm
+#      - com.xeriou.plugins.pluginx
     controller:
       base-path: sbp
-
 
   thymeleaf:
     prefix: file:./templates/
